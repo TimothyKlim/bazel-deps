@@ -507,10 +507,12 @@ object Language {
     def asOptionsString: String = s"scala:${v.asString}"
     def asReversableString = s"${asString}:${v.asString}"
 
-    val major = v.asString.split('.') match {
+    val version = v.asString
+    val major = version.split('.') match {
       case Array("2", x) if (x.toInt >= 10) => s"2.$x"
       case Array("2", x, _) if (x.toInt >= 10) => s"2.$x"
-      case _ => sys.error(s"unsupported scala version: ${v.asString}")
+      case _ if version.startsWith("3.") => version
+      case _ => sys.error(s"unsupported scala version: $version")
     }
     private val suffix = s"_$major"
     private def add(a: MavenArtifactId): MavenArtifactId =
