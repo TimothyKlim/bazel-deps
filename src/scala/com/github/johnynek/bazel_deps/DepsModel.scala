@@ -511,6 +511,7 @@ object Language {
     val major = version.split('.') match {
       case Array("2", x) if (x.toInt >= 10) => s"2.$x"
       case Array("2", x, _) if (x.toInt >= 10) => s"2.$x"
+      case Array("3") => "3"
       case _ if version.startsWith("3.") => version
       case _ => sys.error(s"unsupported scala version: $version")
     }
